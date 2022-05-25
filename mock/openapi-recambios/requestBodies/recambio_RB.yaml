@@ -60,8 +60,8 @@ content:
               minimum: 0
         precio:
           description: Precio unitario de los recambios en euros
-          type: integer
-          format: int32
+          type: number
+          format: float
           minimum: 0
     examples:
       recambio_RB-example:

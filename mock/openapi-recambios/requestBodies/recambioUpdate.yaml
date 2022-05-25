@@ -52,8 +52,8 @@ content:
               description: Largo en centímetros
           description: Dimensiones del recambio
         precio:
-          type: integer
-          format: int32
+          type: number
+          format: float
           minimum: 0
           description: Precio unitario de los recambios en euros             
     examples:

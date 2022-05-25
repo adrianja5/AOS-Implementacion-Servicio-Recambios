@@ -63,8 +63,8 @@ properties:
         minimum: 0
   precio:
     description: Precio unitario de los recambios en euros
-    type: integer
-    format: int32
+    type: number
+    format: float
     minimum: 0
   links:
     description: Enlaces de relación
@@ -88,7 +88,7 @@ example:
     alto: 40
     ancho: 40
     largo: 20
-  precio: 80
+  precio: 80.0
   links:
     parent:
       href: "https://example.com/api/v1/recambios"

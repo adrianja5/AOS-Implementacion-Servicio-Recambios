@@ -13,7 +13,7 @@ value:
       alto: 40
       ancho: 40
       largo: 20
-    precio: 80
+    precio: 80.0
     links:
       parent:
         href: "https://example.com/api/v1/recambios"
