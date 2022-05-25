@@ -1,0 +1,12 @@
+# orderingParam
+name: ordering
+in: query
+description: 'Tipo de ordenación: `ASC` | `DESC`'
+required: false
+allowEmptyValue: false
+schema:
+  type: string
+  enum:
+    - ASC
+    - DESC
+  default: ASC

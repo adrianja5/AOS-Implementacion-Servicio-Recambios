@@ -1,0 +1,5 @@
+# Allow-G-PU-D-O
+description: Lista de métodos HTTP soportados
+schema:
+  type: string
+example: GET,PUT,DELETE,OPTIONS

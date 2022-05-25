@@ -1,0 +1,9 @@
+# ETag
+description: Entity Tag (identificador único proporcionado para validación de caché)
+schema:
+  type: string
+  pattern: "[0-9a-f]*"
+  # https://github.com/marak/Faker.js#api-methods
+  x-faker: random.uuid
+  example:
+    33a64df551425fcc

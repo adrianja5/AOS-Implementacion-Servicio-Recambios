@@ -1,0 +1,8 @@
+# ifMatchParam
+name: If-Match
+in: header
+description: ETag del Recambio que se desea modificar
+required: true
+schema:
+  type: string
+  pattern: "[0-9a-f]*"

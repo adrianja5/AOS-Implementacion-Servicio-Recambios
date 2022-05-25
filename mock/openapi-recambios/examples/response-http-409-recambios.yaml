@@ -1,0 +1,6 @@
+# response-http-409-recambios-equivalencias
+value:
+  type: https://httpstatuses.com/409
+  title: CONFLICT
+  status: 409
+  detail: Se ha intentado añadir una recambio que ya existía (combinación de nombre + proveedor + modelo).

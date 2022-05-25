@@ -1,0 +1,475 @@
+openapi: 3.0.2
+
+info:
+  title: '[Grupo 3] Especificación API REST Recambios'
+  version: '1.0.0'
+  contact:
+    name: Grupo 3
+    url: 'https://github.com/adrianja5/AOS-Especificacion-Servicio-Grupo3'
+
+servers:
+  - url: http://127.0.0.1:8080/api/v1
+
+paths:
+  /recambios:
+
+    get:
+      summary: Obtiene todos los recambios registrados del inventario
+      description: |
+        Los códigos de estado que puede devolver este endpoint son:
+        | Status Code | Descripción          | Motivo                                                    |
+        |-------------|----------------------|-----------------------------------------------------------|
+        | **200**     | `OK`                 | Hay recambios registrados                                 |
+        | **304**     | `NOT MODIFIED`       | Los recambios de la lista no han sido modificados         |
+        | **400**     | `BAD REQUEST`        | Se ha introducido algún valor erróneo en la consulta      |
+        | **404**     | `NOT FOUND`          | No existen recambios registrados                          |
+        Se puede utilizar el ETag de una anterior consulta para caché.
+      operationId: recambios_cget
+      parameters:
+        - $ref: "#/components/parameters/pageParam"
+        - $ref: "#/components/parameters/limitParam"
+        - $ref: "#/components/parameters/orderParam"
+        - $ref: "#/components/parameters/orderingParam"
+        - $ref: "#/components/parameters/nombreFilterParam"
+        - $ref: "#/components/parameters/ifNoneMatchParam"
+      responses:
+        '200':
+          description: >
+            Lista de los recambios registrados
+            y links a las páginas `first`, `last`,
+            `prev` (si no es la primera) y `next` (si no es la última)
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recambios:
+                    description: Lista de recambios
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Recambio"
+                  links:
+                    description: Enlaces de paginación
+                    type: object
+                    properties:
+                      first:
+                        $ref: "#/components/schemas/Link"
+                      last:
+                        $ref: "#/components/schemas/Link"
+                      prev:
+                        $ref: "#/components/schemas/Link"
+                      next:
+                        $ref: "#/components/schemas/Link"
+                    example:
+                      first:
+                        href: "https://example.com/api/v1/recambios?page=1&limit=1&order=id&ordering=ASC"
+                        rel:  "getListaRecambios"
+                      last:
+                        href: "https://example.com/api/v1/recambios?page=100&limit=1&order=id&ordering=ASC"
+                        rel:  "getListaRecambios"
+                      prev:
+                        href: "https://example.com/api/v1/recambios?page=1&limit=1&order=id&ordering=ASC"
+                        rel:  "getListaRecambios"
+                      next:
+                        href: "https://example.com/api/v1/recambios?page=3&limit=1&order=id&ordering=ASC"
+                        rel:  "getListaRecambios"
+        '400':
+          description: '`BAD REQUEST`: Se ha introducido algún valor erróneo en la consulta.
+                        Por ejemplo, se ha introducido un número de página menor que `1`
+                        o el límite introducido es menor que `0`.'
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/HTTP_Problem"
+              examples:
+                response-http-400-recambios-get:
+                  value:
+                    type: https://httpstatuses.com/400
+                    title: BAD REQUEST
+                    status: 400
+                    detail: Se ha introducido algún valor erróneo en la consulta.
+                    instance: about:blank
+        '304':
+          $ref: '#/components/responses/Response_304'
+        '404':
+          $ref: '#/components/responses/Response_404'
+
+    options:
+      summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
+      description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
+      operationId: recambios_coptions
+      responses:
+        '204':
+          description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
+          headers:
+            Allow:
+              $ref: '#/components/headers/Allow-G-PO-O'
+
+    post:
+      summary: Añade un recambio al inventario
+      description: |
+        Los códigos de estado que puede devolver este endpoint son:
+        | Status Code | Descripción          | Motivo                                                                         |
+        |-------------|----------------------|--------------------------------------------------------------------------------|
+        | **201**     | `CREATED`            | Se crea un nuevo recambio correctamente                                        |
+        | **400**     | `BAD REQUEST`        | Se ha introducido algún valor erróneo en la consulta                           |
+        | **409**     | `CONFLICT`           | Ya existe un recambio con esa combinación de `nombre` + `proveedor` + `modelo` |
+      operationId: recambios_post
+      requestBody:
+        $ref: "#/components/requestBodies/recambio_RB"
+      responses:
+        '201':
+          description:  Nuevo recambio añadido
+          headers:
+            Location:
+              $ref: "#/components/headers/Location-Recambios-Post"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recambio'
+        '400':
+          description: '`BAD REQUEST`: Se ha introducido algún valor erróneo a la hora de dar de alta el nuevo recambio'
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/HTTP_Problem"
+              examples:
+                response-http-400-recambios-post:
+                  value:
+                    type: https://httpstatuses.com/400
+                    title: BAD REQUEST
+                    status: 400
+                    detail: Se ha introducido algún valor erróneo a la hora de dar de alta el nuevo recambio
+                    instance: about:blank
+        '409':
+          $ref: "#/components/responses/Response_409_Recambio"
+
+  /recambios/{recambioId}:
+    parameters:
+      - $ref: '#/components/parameters/recambioId'
+
+    get:
+      summary: Obtiene un recambio identificado por su `recambioId`
+      description: |
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        | Status Code      | Descripción | Motivo                                |
+        | ---------------- | ------------| --------------------------------------|
+        | **200**          | OK          | Si el recambio existe                 |
+        | **404**          | NOT FOUND   | Si el recambio no existe              |
+      operationId: recambios_get
+      responses:
+        '200':
+          description: Recambio
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recambio'
+        '404':
+          $ref: '#/components/responses/Response_404'
+
+    put:
+      summary: Modifica un recambio
+      description: |
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        | Status Code | Descripción         | Motivo                                        |
+        | ------------| --------------------| ----------------------------------------------|
+        | **200**     | OK                  | El recambio se ha modificado correctamente    |
+        | **404**     | NOT FOUND           | Si el recambio no existe                      |
+        | **412**     | PRECONDITION FAILED | Si el ETag proporcionado no está actualizado  |
+      operationId: recambio_put
+      parameters:
+        - $ref: '#/components/parameters/ifMatchParam'
+      requestBody:
+        $ref: '#/components/requestBodies/recambioUpdate'
+      responses:
+        '200':
+          description: '`OK`: el recambio ha sido modificado'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recambio'
+        '404':
+          $ref: '#/components/responses/Response_404'
+        '412':
+          $ref: '#/components/responses/Response_412'
+
+    options:
+      summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
+      description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
+      operationId: recambios_options
+      responses:
+        '204':
+          description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
+          headers:
+            Allow:
+              $ref: '#/components/headers/Allow-G-PU-D-O'
+
+    delete:
+      summary: descataloga un recambio identificado por su `recambioId`
+      description: |
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        | Status Code | Descripción | Motivo                                    |
+        |-------------|-------------|-------------------------------------------|
+        | **204**     | NO CONTENT  | El recambio existía y ha sido eliminado   |
+        | **404**     | NOT FOUND   | Si el recambio no existe                  |
+      operationId: recambios_delete
+      responses:
+        '204':
+          description: recambio eliminado &lt;Cuerpo de la respuesta vacío&gt;
+        '404':
+          $ref: "#/components/responses/Response_404"
+
+  /recambios/{recambioId}/equivalencias:
+    parameters:
+      - $ref: "#/components/parameters/recambioId"
+
+    get:
+      summary: Obtiene todos los recambios equivalentes con el recambio indicado
+      description: |
+        Los códigos de estado que puede devolver este endpoint son:
+        | Status Code | Descripción          | Motivo                                                    |
+        |-------------|----------------------|-----------------------------------------------------------|
+        | **200**     | `OK`                 | Hay recambios equivalentes                                |
+        | **304**     | `NOT MODIFIED`       | Los recambios equivalentes no han sido modificados        |
+        | **404**     | `NOT FOUND`          | No existe el recambio o no tiene recambios equivalentes   |
+        Se puede utilizar el ETag de una anterior consulta para caché.
+      operationId: recambios_equivalencias_cget
+      parameters:
+        - $ref: "#/components/parameters/ifNoneMatchParam"
+      responses:
+        '200':
+          description: Lista de los recambios equivalentes
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recambios_equivalentes:
+                    description: Lista de recambios
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Recambio_Equivalente"
+                  links:
+                    description: Enlaces de relación
+                    type: object
+                    properties:
+                      parent:
+                        $ref: "#/components/schemas/Link"
+                      self:
+                        $ref: "#/components/schemas/Link"
+                    example:
+                      parent:
+                        href: "https://example.com/api/v1/recambios/2020"
+                        rel: "getRecambio putRecambio deleteRecambio"
+                      self:
+                        href: "https://example.com/api/v1/recambios/2020/equivalencias"
+                        rel: "getListaEquivalencias postEquivalencia"
+        '304':
+          $ref: '#/components/responses/Response_304'
+        '404':
+          $ref: '#/components/responses/Response_404'
+
+    options:
+      summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
+      description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
+      operationId: recambios_equivalencias_coptions
+      responses:
+        '204':
+          description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
+          headers:
+            Allow:
+              $ref: '#/components/headers/Allow-G-PO-O'
+
+    post:
+      summary: Añade un recambio equivalente al recambio. La operación es simétrica*
+      description: |
+        Los códigos de estado que puede devolver este endpoint son:
+        | Status Code | Descripción          | Motivo                                                    |
+        |-------------|----------------------|-----------------------------------------------------------|
+        | **201**     | `CREATED`            | Se ha añadido la equivalencia del recambio                |
+        | **400**     | `BAD REQUEST`        | Se ha introducido un id incorrecto o que no existe        |
+        | **404**     | `NOT FOUND`          | El recambio no existe                                     |
+        | **409**     | `CONFLICT`           | Los recambios ya eran equivalentes                        |
+        ---
+        \* El recambio equivalente tendrá de equivalente también al recambio.
+      operationId: recambios_equivalencias_post
+      requestBody:
+        $ref: '#/components/requestBodies/recambioEquivalenteId_RB'
+      responses:
+        '201':
+          headers:
+            Location:
+              $ref: "#/components/headers/Location-Recambios-Equivalentes-Post"
+          description: Equivalencia creada
+        '400':
+          description: '`BAD REQUEST`: Se ha introducido un id incorrecto o que no existe.'
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/HTTP_Problem"
+              examples:
+                response-http-400-recambios-equivalencias-post:
+                  value:
+                    type: https://httpstatuses.com/400
+                    title: BAD REQUEST
+                    status: 400
+                    detail: Se ha introducido un id incorrecto o que no existe.
+                    instance: about:blank
+        '404':
+          $ref: "#/components/responses/Response_404"
+        '409':
+          $ref: "#/components/responses/Response_409_Recambio_Equivalente"
+
+  /recambios/{recambioId}/equivalencias/{recambioEquivalenteId}:
+    parameters:
+    - $ref: "#/components/parameters/recambioId"
+    - $ref: "#/components/parameters/recambioEquivalenteId"
+
+    get:
+      summary: Obtiene el recambio equivalente si lo es
+      description: |
+        Los códigos de estado que puede devolver este endpoint son:
+        | Status Code | Descripción          | Motivo                                                            |
+        |-------------|----------------------|-------------------------------------------------------------------|
+        | **200**     | `OK`                 | Ambos recambios existen y el recambio es equivalente              |
+        | **404**     | `NOT FOUND`          | Alguno de los recambios no existe o el recambio no es equivalente |
+      operationId: recambios_equivalencias_get
+      responses:
+        '200':
+          description: Recambio equivalente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recambio_Equivalente"
+        '404':
+          $ref: "#/components/responses/Response_404"
+
+    head:
+      summary: Comprueba si el recambio es equivalente
+      description: |
+        Los códigos de estado que puede devolver este endpoint son:
+        | Status Code | Descripción          | Motivo                                                            |
+        |-------------|----------------------|-------------------------------------------------------------------|
+        | **200**     | `OK`                 | Ambos recambios existen y el recambio es equivalente              |
+        | **404**     | `NOT FOUND`          | Alguno de los recambios no existe o el recambio no es equivalente |
+      operationId: recambios_equivalencias_head
+      responses:
+        '200':
+          description: El recambio es equivalente
+        '404':
+          description: Alguno de los recambios no existe o el recambio no es equivalente
+
+    options:
+      summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
+      description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
+      operationId: recambios_equivalencias_options
+      responses:
+        '204':
+          description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
+          headers:
+            Allow:
+              $ref: '#/components/headers/Allow-G-H-PO-D-O'
+
+    delete:
+      summary: Elimina la equivalencia entre el recambio y el recambio equivalente
+      description: |
+        Los códigos de estado que puede devolver este endpoint son:
+        | Status Code      | Descripción | Motivo                                                            |
+        | ---------------- | ------------| ------------------------------------------------------------------|
+        | **204**          | NO CONTENT  | Ambos recambios existen y se ha eliminado la equivalencia         |
+        | **404**          | NOT FOUND   | Alguno de los recambios no existe o el recambio no es equivalente |
+      operationId: recambios_equivalencias_delete
+      responses:
+        '204':
+          description: Equivalencia eliminada &lt;Cuerpo de la respuesta vacío&gt;
+        '404':
+          $ref: "#/components/responses/Response_404"
+
+components:
+  schemas:
+    Recambio:
+      $ref: "./schemas/Recambio.yaml"
+    Recambio_Equivalente:
+      $ref: "./schemas/Recambio_Equivalente.yaml"
+    HTTP_Problem:
+      $ref: "./schemas/HTTP_Problem.yaml"
+    Link:
+      $ref: "./schemas/Link.yaml"
+  requestBodies:
+    recambio_RB:
+      $ref: "./requestBodies/recambio_RB.yaml"
+    recambioEquivalenteId_RB:
+      $ref: "./requestBodies/recambioEquivalenteId_RB.yaml"
+    recambioUpdate:
+      $ref: "./requestBodies/recambioUpdate.yaml"
+
+  parameters:
+    pageParam:
+      $ref: "./parameters/pageParam.yaml"
+    limitParam:
+      $ref: "./parameters/limitParam.yaml"
+    orderParam:
+      $ref: "./parameters/orderParam.yaml"
+    orderingParam:
+      $ref: "./parameters/orderingParam.yaml"
+    nombreFilterParam:
+      $ref: "./parameters/nombreFilterParam.yaml"
+    ifMatchParam:
+      $ref: "./parameters/ifMatchParam.yaml"
+    ifNoneMatchParam:
+      $ref: "./parameters/ifNoneMatchParam.yaml"
+    recambioId:
+      $ref: "./parameters/recambioId.yaml"
+    recambioEquivalenteId:
+      $ref: "./parameters/recambioEquivalenteId.yaml"
+
+  headers:
+    ETag:
+      $ref: "./headers/ETag.yaml"
+    Allow-G-PO-O:
+      $ref: "./headers/Allow-G-PO-O.yaml"
+    Allow-G-PU-D-O:
+      $ref: "./headers/Allow-G-PU-D-O.yaml"
+    Allow-G-H-PO-D-O:
+      $ref: "./headers/Allow-G-H-PO-D-O.yaml"
+    Location-Recambios-Post:
+      $ref: "./headers/Location-Recambios-Post.yaml"
+    Location-Recambios-Equivalentes-Post:
+      $ref: "./headers/Location-Recambios-Equivalentes-Post.yaml"
+
+  responses:
+    Response_404:
+      $ref: "./responses/Response_404.yaml"
+    Response_304:
+      $ref: "./responses/Response_304.yaml"
+    Response_409_Recambio:
+      $ref: "./responses/Response_409_Recambio.yaml"
+    Response_409_Recambio_Equivalente:
+      $ref: "./responses/Response_409_Recambio_Equivalente.yaml"
+    Response_412:
+      $ref: "./responses/Response_412.yaml"
+    Response_422:
+      $ref: "./responses/Response_422.yaml"
+
+  examples:
+    recambio_RB-example:
+      $ref: "./examples/recambio_RB-example.yaml"
+    response-http-404:
+      $ref: "./examples/response-http-404.yaml"
+    response-http-412:
+      $ref: "./examples/response-http-412.yaml"
+    response-http-422:
+      $ref: "./examples/response-http-422.yaml"
+    response-http-304:
+      $ref: "./examples/response-http-304.yaml"
+    response-http-409-recambios-equivalencias:
+      $ref: "./examples/response-http-409-recambios-equivalencias.yaml"

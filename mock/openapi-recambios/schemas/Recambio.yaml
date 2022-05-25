@@ -1,0 +1,98 @@
+# Recambio
+description: 'Información de un recambio. Un recambio es **únicamente** definido
+              por el `nombre`, el `proveedor` y el `modelo` del recambio.'
+title: '⚙ Recambio'
+type: object
+required:
+  - nombre
+  - proveedor
+  - modelo
+  - cantidad
+  - precio
+properties:
+  id:
+    description: Id de un recambio. Existe un único id para cada `nombre` + `proveedor` + `modelo`
+    type: integer
+    format: int32
+    readOnly: true
+  nombre:
+    description: Nombre del recambio
+    type: string
+  descripcion:
+    description: Descripción del recambio
+    type: string
+  proveedor:
+    description: Proveedor del recambio
+    type: string
+  modelo:
+    description: Modelo del recambio
+    type: string
+  cantidad:
+    description: Cantidad de recambios
+    type: integer
+    format: int32
+    minimum: 0
+  vehiculos_compatibles:
+    description: Lista de vehículos compatibles con el recambio
+    type: array
+    items:
+      type: string
+  peso:
+    description: Peso del recambio en kilogramos
+    type: number
+    format: float
+    minimum: 0
+  dimensiones:
+    description: Dimensiones del recambio
+    type: object
+    properties:
+      alto:
+        description: Alto en centímetros
+        type: number
+        format: float
+        minimum: 0
+      ancho:
+        description: Ancho en centímetros
+        type: number
+        format: float
+        minimum: 0
+      largo:
+        description: Largo en centímetros
+        type: number
+        format: float
+        minimum: 0
+  precio:
+    description: Precio unitario de los recambios en euros
+    type: integer
+    format: int32
+    minimum: 0
+  links:
+    description: Enlaces de relación
+    readOnly: true
+    type: object
+    properties:
+      parent:
+        $ref: "./Link.yaml"
+      self:
+        $ref: "./Link.yaml"
+example:
+  id: 2022
+  nombre: 'Neumático: Continental VancoCamper 215/70 R15CP 109R 8PR'
+  descripcion: 'Neumático para coche'
+  proveedor: 'Continental VancoCamper'
+  modelo: '215/70 R15CP 109R 8PR'
+  cantidad: 20
+  vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hyundai i30 Fastback']
+  peso: 5
+  dimensiones:
+    alto: 40
+    ancho: 40
+    largo: 20
+  precio: 80
+  links:
+    parent:
+      href: "https://example.com/api/v1/recambios"
+      rel: "getListaRecambios postRecambio"
+    self:
+      href: "https://example.com/api/v1/recambios/2022"
+      rel: "getRecambio putRecambio deleteRecambio"

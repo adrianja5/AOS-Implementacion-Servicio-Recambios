@@ -1,0 +1,8 @@
+# recambioId
+name: recambioId
+in: path
+description: Identificador único del recambio
+schema:
+  type: integer
+  format: int32
+required: true

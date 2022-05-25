@@ -1,0 +1,11 @@
+# Response_412
+description: >
+  `UNPROCESSABLE ENTITY`
+  Falta alguno de los atributos obligatorios (`nombre`, `proveedor`, `modelo`, `cantidad` o `precio`)
+content:
+  application/problem+json:
+    schema:
+      $ref: '../schemas/HTTP_Problem.yaml'
+    examples:
+      response-http-422:
+        $ref: '../examples/response-http-422.yaml'

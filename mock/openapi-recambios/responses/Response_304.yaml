@@ -1,0 +1,12 @@
+# Response_304
+description: '`NOT MODIFIED`: El recurso solicitado no ha sido modificado'
+headers:
+  ETag:
+    $ref: "../headers/ETag.yaml"
+content:
+  application/problem+json:
+    schema:
+      $ref: '../schemas/HTTP_Problem.yaml'
+    examples:
+      response-http-304:
+        $ref: '../examples/response-http-304.yaml'

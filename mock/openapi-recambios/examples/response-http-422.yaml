@@ -1,0 +1,7 @@
+# response-http-422
+value:
+  type: https://httpstatuses.com/422
+  title: UNPROCESSABLE ENTITY
+  status: 422
+  detail: Falta alguno de los atributos obligatorios (nombre, proveedor, modelo, cantidad o precio)
+  instance: about:blank

@@ -1,0 +1,9 @@
+# Response_409
+description: '`CONFLICT`: El recurso que se ha intentado añadir ya existía'
+content:
+  application/problem+json:
+    schema:
+      $ref: '../schemas/HTTP_Problem.yaml'
+    examples:
+      response-http-409-recambios:
+        $ref: '../examples/response-http-409-recambios.yaml'

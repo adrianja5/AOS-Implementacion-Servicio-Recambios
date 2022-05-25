@@ -1,0 +1,6 @@
+# response-http-304
+value:
+  type: https://httpstatuses.com/304
+  title: NOT MODIFIED
+  status: 304
+  detail: El recurso solicitado no ha sido modificado.

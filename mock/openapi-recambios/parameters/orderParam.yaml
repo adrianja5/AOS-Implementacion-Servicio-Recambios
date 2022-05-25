@@ -1,0 +1,15 @@
+# orderParam
+name: order
+in: query
+description: 'Ordenación por: `id` | `nombre` | `proveedor` | `cantidad` | `precio`'
+required: false
+allowEmptyValue: false
+schema:
+  type: string
+  enum:
+    - id
+    - nombre
+    - proveedor
+    - cantidad
+    - precio
+  default: id

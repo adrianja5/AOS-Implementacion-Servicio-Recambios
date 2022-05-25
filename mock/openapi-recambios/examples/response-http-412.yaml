@@ -1,0 +1,7 @@
+# response-http-412
+value:
+  type: https://httpstatuses.com/412
+  title: PRECONDITION FAILED
+  status: 412
+  detail: El ETag proporcionado no está actualizado
+  instance: about:blank

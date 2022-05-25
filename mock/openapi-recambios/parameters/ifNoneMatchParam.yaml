@@ -1,0 +1,8 @@
+# ifNoneMatchParam
+name: If-None-Match
+in: header
+description: ETag del recurso
+required: false
+schema:
+  type: string
+  pattern: "[0-9a-f]*"

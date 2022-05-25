@@ -1,0 +1,8 @@
+# recambioEquivalenteId
+name: recambioEquivalenteId
+in: path
+description: Identificador único del recambio equivalente
+schema:
+  type: integer
+  format: int32
+required: true

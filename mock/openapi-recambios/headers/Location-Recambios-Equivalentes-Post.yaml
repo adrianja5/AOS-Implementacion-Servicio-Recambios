@@ -1,0 +1,8 @@
+# Location-Recambios-Equivalentes-Post
+description: '`URI` del nuevo recurso'
+schema:
+  type: string
+  format: uri
+  x-faker: internet.url
+  example:
+    "https://example.com/api/v1/recambios/2020/equivalencias/2022"

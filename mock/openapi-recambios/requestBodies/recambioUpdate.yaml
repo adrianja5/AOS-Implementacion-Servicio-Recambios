@@ -1,0 +1,61 @@
+# recambioUpdate
+description: 'Información de actualización de un recambio'
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        nombre:
+          type: string
+          description: Nombre del recambio
+        descripcion:
+          type: string
+          description: Descripción del recambio
+        proveedor:
+          type: string
+          description: Proveedor del recambio
+        modelo:
+          type: string
+          description: Modelo del recambio
+        cantidad:
+          type: integer
+          format: int32
+          minimum: 0
+          description: Cantidad de recambios
+        vehiculos_compatibles:
+          type: array
+          items:
+            type: string
+          description: Lista de vehículos compatibles con el recambio
+        peso:
+          type: number
+          format: float
+          minimum: 0
+          description: Peso del recambio en kilogramos
+        dimensiones:
+          type: object
+          properties:
+            alto:
+              type: number
+              format: float
+              minimum: 0
+              description: Alto en centímetros
+            ancho:
+              type: number
+              format: float
+              minimum: 0
+              description: Ancho en centímetros
+            largo:
+              type: number
+              format: float
+              minimum: 0
+              description: Largo en centímetros
+          description: Dimensiones del recambio
+        precio:
+          type: integer
+          format: int32
+          minimum: 0
+          description: Precio unitario de los recambios en euros             
+    examples:
+      recambioUpdate-example:
+        $ref: '../examples/recambio_RB-example.yaml'

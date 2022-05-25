@@ -1,0 +1,23 @@
+# recambio-example
+value:
+  recambio:
+    id: 2022
+    nombre: 'Neumático: Continental VancoCamper 215/70 R15CP 109R 8PR'
+    descripcion: 'Neumático para coche'
+    proveedor: 'Continental VancoCamper'
+    modelo: '215/70 R15CP 109R 8PR'
+    cantidad: 20
+    vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hyundai i30 Fastback']
+    peso: 5
+    dimensiones:
+      alto: 40
+      ancho: 40
+      largo: 20
+    precio: 80
+    links:
+      parent:
+        href: "https://example.com/api/v1/recambios"
+        rel: "getListaRecambios postRecambio"
+      self:
+        href: "https://example.com/api/v1/recambios/2022"
+        rel: "getRecambio putRecambio deleteRecambio"

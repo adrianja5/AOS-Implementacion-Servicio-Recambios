@@ -1,0 +1,16 @@
+# recambioEquivalenteId_RB
+description: Id del recambio equivalente
+required: true
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - recambioEquivalenteId
+      properties:
+        recambioEquivalenteId:
+          description: Identificador único del recambio equivalente
+          type: integer
+          format: int32
+    example:
+      recambioEquivalenteId: 2022

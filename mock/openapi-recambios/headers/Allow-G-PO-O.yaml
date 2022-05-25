@@ -1,0 +1,5 @@
+# Allow-G-PO-O
+description: Lista de métodos HTTP soportados
+schema:
+  type: string
+example: GET,POST,OPTIONS

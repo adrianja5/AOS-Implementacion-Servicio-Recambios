@@ -1,0 +1,12 @@
+# limitParam
+name: limit
+in: query
+description: >
+  Número de recambios devueltos por cada página.
+  Si es `0`, devuelve todos los recambios en una única página
+required: false
+allowEmptyValue: false
+schema:
+  type: integer
+  minimum: 0
+  default: 10

@@ -1,0 +1,8 @@
+# nombreFilterParam
+name: nombreFilter
+in: query
+description: Filtro por nombre. Puede ser un substring del nombre
+required: false
+allowEmptyValue: false
+schema:
+  type: string
