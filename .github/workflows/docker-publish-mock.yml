@@ -28,6 +28,10 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Downcase IMAGE_NAME
+        run: |
+          echo "IMAGE_NAME_DOWNCASE=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3.0.0
@@ -35,5 +39,5 @@ jobs:
           context: mock
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:mock
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_DOWNCASE }}:mock
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_DOWNCASE }}:latest
