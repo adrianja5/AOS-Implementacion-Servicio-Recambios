@@ -4,12 +4,12 @@
 
 El servicio está alojado en el registro de GitHub Packages de este mismo repositorio. Se puede obtener mediante el comando:
 ```console
-$ docker pull ghcr.io/adrianja5/pruebas-docker-aos:latest
+$ docker pull ghcr.io/adrianja5/aos-implementacion-servicio-recambios:latest
 ```
 
 Luego, el servicio se puede desplegar con el comando:
 ```console
-$  docker run -p 80:8080 ghcr.io/adrianja5/pruebas-docker-aos:latest
+$  docker run -p 80:8080 ghcr.io/adrianja5/aos-implementacion-servicio-recambios:latest
 ```
 El contenedor utiliza el puerto `8080`, pero en el *host* se puede usar otro distinto (en el ejemplo se ha usado el puerto `80`).
 
