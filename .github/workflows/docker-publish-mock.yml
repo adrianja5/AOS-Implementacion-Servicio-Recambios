@@ -40,4 +40,3 @@ jobs:
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_DOWNCASE }}:mock
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_DOWNCASE }}:latest
