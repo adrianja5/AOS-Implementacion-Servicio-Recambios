@@ -7,7 +7,8 @@ COPY requirements.txt /service/requirements.txt
 
 RUN apk add --no-cache build-base && \
     pip install --no-cache-dir --upgrade -r requirements.txt && \
-    apk del --purge build-base
+    apk del --purge build-base && \
+    mkdir -p /service/db
 
 EXPOSE 8080
 
