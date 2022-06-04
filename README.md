@@ -17,7 +17,12 @@ Alternativamente, se puede utilizar otros *tags*:
 
 ### Tags disponibles
 
-En construcción 🚧
+Hay dos *tags* principales disponibles:
+
+  - `latest`: Hace referencia a la última versión de la API. Actualmente corresponde a la API implementada. Es la etiqueta que se **debe** usar para obtener la última versión de la API.
+  - `mock`: Hace referencia a la última versión del *mock* de la API.
+
+Además, hay un registro de las versiones de las imágenes de la implementación de la API que se puede consultar en la [información de la imagen](https://github.com/adrianja5/AOS-Implementacion-Servicio-Recambios/pkgs/container/aos-implementacion-servicio-recambios).
 
 ## Construcción manual de las imágenes
 
