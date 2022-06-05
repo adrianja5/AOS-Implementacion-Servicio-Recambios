@@ -24,6 +24,17 @@ Hay dos *tags* principales disponibles:
 
 Además, hay un registro de las versiones de las imágenes de la implementación de la API que se puede consultar en la [información de la imagen](https://github.com/adrianja5/AOS-Implementacion-Servicio-Recambios/pkgs/container/aos-implementacion-servicio-recambios).
 
+## Endpoints
+
+Los endpoints disponibles y sus métodos son:
+
+  - `/api/v1/recambios`: `GET`, `POST`, `OPTIONS`.
+  - `/api/v1/recambios/{recambioId}`: `GET`, `PUT`, `DELETE`, `OPTIONS`.
+  - `/api/v1/recambios/{recambioId}/equivalencias`: `GET`, `POST`, `OPTIONS`.
+  - `/api/v1/recambios/{recambioId}/equivalencias/{recambioEquivalenteId}`: `GET`, `HEAD`, `DELETE`, `OPTIONS`.
+
+Para más información, consultar la [especificación OpenAPI](https://github.com/adrianja5/AOS-Especificacion-Servicio-Grupo3).
+
 ## Construcción manual de las imágenes
 
 ### Servicio implementado
