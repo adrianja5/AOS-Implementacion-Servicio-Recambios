@@ -82,7 +82,7 @@ def get_recambios(request: Request,
 
   content = {'recambios': lista_recambios, 'links': links}
 
-  ETag = get_ETag(lista_recambios)
+  ETag = get_ETag(content)
   headers = {'ETag': ETag}
 
   if ETag == If_None_Match:
