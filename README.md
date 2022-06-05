@@ -9,7 +9,7 @@ $ docker pull ghcr.io/adrianja5/aos-implementacion-servicio-recambios:latest
 
 Luego, el servicio se puede desplegar con el comando:
 ```console
-$  docker run -p 80:8080 ghcr.io/adrianja5/aos-implementacion-servicio-recambios:latest
+$ docker run -p 80:8080 ghcr.io/adrianja5/aos-implementacion-servicio-recambios:latest
 ```
 El contenedor utiliza el puerto `8080`, pero en el *host* se puede usar otro distinto (en el ejemplo se ha usado el puerto `80`).
 
@@ -19,8 +19,8 @@ Alternativamente, se puede utilizar otros *tags*:
 
 Hay dos *tags* principales disponibles:
 
-  - `latest`: Hace referencia a la última versión de la API. Actualmente corresponde a la API implementada. Es la etiqueta que se **debe** usar para obtener la última versión de la API.
-  - `mock`: Hace referencia a la última versión del *mock* de la API.
+  - [`latest`](https://github.com/adrianja5/AOS-Implementacion-Servicio-Recambios/blob/main/implementation/Dockerfile): Hace referencia a la última versión de la API. Actualmente corresponde a la API implementada. Es la etiqueta que se **debe** usar para obtener la última versión de la API.
+  - [`mock`](https://github.com/adrianja5/AOS-Implementacion-Servicio-Recambios/blob/main/mock/Dockerfile): Hace referencia a la última versión del *mock* de la API.
 
 Además, hay un registro de las versiones de las imágenes de la implementación de la API que se puede consultar en la [información de la imagen](https://github.com/adrianja5/AOS-Implementacion-Servicio-Recambios/pkgs/container/aos-implementacion-servicio-recambios).
 
