@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+
+  recambios-service:
+    image: ghcr.io/adrianja5/aos-implementacion-servicio-recambios:latest
+    container_name: servicio_recambios
+    ports:
+      - "80:8080"
+    volumes:
+      - recambios-service-database:/service/db
+      # Alternativamente, se puede utilizar una ruta local en el host para crear el volumen
+      #- ./db:/service/db
+
+  frontend:
+    image: swaggerapi/swagger-ui:latest
+    container_name: recambios_ui
+    ports:
+      - "8000:8080"
+    environment:
+      SWAGGER_JSON: /recambios/openapi.yaml
+    volumes:
+      - ../mock/openapi-recambios:/recambios:ro
+
+
+volumes:
+  recambios-service-database:

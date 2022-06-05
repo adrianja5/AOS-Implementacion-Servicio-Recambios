@@ -81,6 +81,8 @@ Se puede obtener la imagen del servicio *mock* construyéndola manualmente sigui
    $ docker run -p 80:8080 aos-implementacion-servicio-recambios:mock
    ```
 
-## Información del servicio implementado
+## Ejemplo despliegue
 
-En construcción 🚧
+En el directorio `example` se incluye un fichero `docker-compose.yaml` que sirve de ejemplo de despligue del servicio, incluyendo la gestión de la persistencia mediante volúmenes y la comunicación con otro servicio, una interfaz Swagger con la especificación del servicio.
+
+**NOTA**: Es necesario clonar el repositorio ya que el servicio de interfaz Swagger hace uso de ficheros incluidos en este.
