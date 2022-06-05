@@ -71,7 +71,7 @@ def delete_recambio(db: Session, id_recambio: int) -> bool:
   ids_vehiculos_compatibles_huerfanos = [vehiculo_compatible_eliminado.id_vehiculo for vehiculo_compatible_eliminado
                                                                                    in db_recambio.vehiculos_compatibles
                                                                                    if len(vehiculo_compatible_eliminado.recambios_compatibles) == 1] # Si es 1 solo está en el recambio a eliminar
-  print(ids_vehiculos_compatibles_huerfanos)
+
   for id_vehiculo_compatible_huerfano in ids_vehiculos_compatibles_huerfanos:
     vehiculo = db.query(models.Vehiculo).filter_by(id_vehiculo=id_vehiculo_compatible_huerfano).one()
     db.delete(vehiculo)

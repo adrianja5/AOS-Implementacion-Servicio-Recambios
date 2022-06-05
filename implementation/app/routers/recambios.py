@@ -65,7 +65,7 @@ def get_recambios(request: Request,
   last_params = {'page': last_page} | common_params
   current_params = {'page': page} | common_params
 
-  print(recambio_parent_url)
+
   rel = 'getListaRecambios'
   links = {'first': {'href': recambio_parent_url + '?' + urllib.parse.urlencode(first_params), 'rel': rel},
            'last':  {'href': recambio_parent_url + '?' + urllib.parse.urlencode(last_params),  'rel': rel}}
