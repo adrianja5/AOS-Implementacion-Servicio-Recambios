@@ -26,15 +26,37 @@ Además, hay un registro de las versiones de las imágenes de la implementación
 
 ## Construcción manual de las imágenes
 
-### Servicio mock
+### Servicio implementado
 
-Se puede obtener la imagen del servicio mock construyéndola manualmente siguiendo los pasos:
+Se puede obtener la imagen del servicio implementado construyéndola manualmente siguiendo los pasos:
 
 1. Clonar el repositorio de GitHub:
    ```console
    $ git clone https://github.com/adrianja5/AOS-Implementacion-Servicio-Recambios
    ```
-2. Cambiar al directorio dónde se encuentra el fichero `Dockerfile` del servicio mock:
+2. Cambiar al directorio dónde se encuentra el fichero `Dockerfile` del servicio implementado:
+   ```console
+   $ cd AOS-Implementacion-Servicio-Recambios/implementation
+   ```
+3. Construir la imagen del servicio, indicando el nombre de la imagen en **minúsculas** y un *tag* opcional:
+   ```console
+   $ docker build --tag aos-implementacion-servicio-recambios:latest .
+   ```
+4. Desplegar el servicio usando el nombre de la imagen y el *tag* usado en el punto 3 e indicando los puertos, tanto del *host* 
+   como del contenedor. El puerto interno del contenedor es el `8080`, pero el externo puede ser otro distinto (`80` en el ejemplo):
+   ```console
+   $ docker run -p 80:8080 aos-implementacion-servicio-recambios:latest
+   ```
+
+### Servicio mock
+
+Se puede obtener la imagen del servicio *mock* construyéndola manualmente siguiendo los pasos, muy similares a los de la construcción de la imagen del servicio implementado:
+
+1. Clonar el repositorio de GitHub:
+   ```console
+   $ git clone https://github.com/adrianja5/AOS-Implementacion-Servicio-Recambios
+   ```
+2. Cambiar al directorio dónde se encuentra el fichero `Dockerfile` del servicio *mock*:
    ```console
    $ cd AOS-Implementacion-Servicio-Recambios/mock
    ```
@@ -47,10 +69,6 @@ Se puede obtener la imagen del servicio mock construyéndola manualmente siguien
    ```console
    $ docker run -p 80:8080 aos-implementacion-servicio-recambios:mock
    ```
-
-### Servicio implementado
-
-En construcción 🚧
 
 ## Información del servicio implementado
 
