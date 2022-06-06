@@ -23,7 +23,7 @@ def get_recambio_equivalencias(request: Request,
                                db: Session=Depends(get_db)):
   recambio = crud.read_recambio(db, recambioId)
 
-  if recambio is None:
+  if recambio is None or not recambio.recambios_equivalentes:
     raise HTTP404Exception()
 
 
