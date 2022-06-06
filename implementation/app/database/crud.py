@@ -35,11 +35,11 @@ def read_recambios(db: Session, page: int, limit: int, order: OrderParam, orderi
 
 def create_recambio(db: Session, recambio_dict: dict):
   nombres_vehiculos_compatibles = recambio_dict.pop('vehiculos_compatibles', None)
-  nombres_vehiculos_compatibles = set(nombres_vehiculos_compatibles)
 
   db_recambio = models.Recambio(**recambio_dict)
 
   if nombres_vehiculos_compatibles is not None:
+    nombres_vehiculos_compatibles = set(nombres_vehiculos_compatibles)
     for nombre_vehiculo_compatible in nombres_vehiculos_compatibles:
       vehiculo_compatible = db.query(models.Vehiculo).filter(models.Vehiculo.nombre == nombre_vehiculo_compatible).first()
       if vehiculo_compatible is None:
